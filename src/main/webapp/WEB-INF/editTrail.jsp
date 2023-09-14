@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div class="container">
-	<h1>Edit Trail</h1>
+	<h1>Edit the <c:out value="${originalTrailName}"/> trail!</h1>
 		<div class="form">
 				<form:form action="/trails/${trail.id}/edit/process" method="post" modelAttribute="trail">
 				 <input type="hidden" name="_method" value="put">
@@ -26,6 +26,11 @@
 				        <form:label path="location">Location:</form:label>
 				        <form:input path="location"/>
 				    </p>
+				    <p>
+						<form:label path="isHikedEntirely">Has hiked?</form:label>
+						<form:radiobutton path="isHikedEntirely" value="true" label="yes"/>
+						<form:radiobutton path="isHikedEntirely" value="false" label="no"/>
+					<p>
 				    <p>
 				        <form:label path="description">Description:</form:label>
 				        <form:textarea rows="4" path="description"/>     

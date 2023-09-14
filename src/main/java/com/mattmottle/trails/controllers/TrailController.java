@@ -77,13 +77,14 @@ public class TrailController {
 		viewModel.addAttribute("loggedUser", userService.findById(userId));
 		Trail trail = trailService.findById(trailId);
 		model.addAttribute("trail", trail);
-		
+		model.addAttribute("originalTrailName", trail.getName());
 		return "editTrail.jsp";
 	}
 	@RequestMapping(value="/trails/{trailId}/edit/process", method=RequestMethod.PUT)
-	public String updateTrail(@Valid @ModelAttribute("trail") Trail trail, BindingResult result, Model model) {
+	public String updateTrail(@Valid @ModelAttribute("trail") Trail trail, BindingResult result, Model model, @PathVariable Long trailId) {
 		if(result.hasErrors()) {
 			model.addAttribute("trail", trail);
+			model.addAttribute("originalTrailName", trailService.findById(trailId).getName());
 			return "editTrail.jsp";
 		} else {
 			trailService.updateTrail(trail);

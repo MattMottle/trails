@@ -15,6 +15,7 @@
 		<form:form action="/trails/new/process" method="post" modelAttribute="trail">
 			<div style="color: red"><form:errors path="name"/></div>
 			<div style="color: red"><form:errors path="location"/></div>
+			<div style="color: red"><form:errors path="isHikedEntirely"/></div>
 			<div style="color: red"><form:errors path="description"/></div>
 			<p>
 				<form:label path="name">Name:</form:label>
@@ -24,6 +25,10 @@
 				<form:label path="location">Location:</form:label>
 				<form:input path="location"/>
 			</p>
+			<p>
+				<form:label path="isHikedEntirely">Has hiked?</form:label>
+				<form:radiobutton path="isHikedEntirely" value="true" label="yes"/>
+				<form:radiobutton path="isHikedEntirely" value="false" label="no"/>
 			<p>
 				<form:label path="description">Description:</form:label>
 				<form:textarea rows="4" path="description"/>
