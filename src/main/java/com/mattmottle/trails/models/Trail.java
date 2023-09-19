@@ -1,6 +1,7 @@
 package com.mattmottle.trails.models;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -56,6 +58,9 @@ public class Trail {
 	@ManyToOne(fetch= FetchType.LAZY)
 	@JoinColumn(name="user_id")
 	private User trailCreator;
+	
+	@OneToMany(mappedBy="reviewedTrail", fetch=FetchType.LAZY)
+	private List<Review> allReviews;
 
 	public Long getId() {
 		return id;
@@ -105,5 +110,12 @@ public class Trail {
 	public void setTrailCreator(User trailCreator) {
 		this.trailCreator = trailCreator;
 	}
+	public List<Review> getAllReviews() {
+		return allReviews;
+	}
+	public void setAllReviews(List<Review> allReviews) {
+		this.allReviews = allReviews;
+	}
+	
 }
 

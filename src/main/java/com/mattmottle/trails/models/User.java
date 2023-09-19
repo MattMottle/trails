@@ -54,6 +54,9 @@ public class User {
     
     @OneToMany(mappedBy="trailCreator", fetch = FetchType.LAZY)
     private List<Trail> trails;
+    
+    @OneToMany(mappedBy="reviewer", fetch=FetchType.LAZY)
+    private List<Review> reviews;
 
 	public User() {}
     
@@ -128,4 +131,13 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+	
 }

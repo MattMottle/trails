@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>All Trails</title>
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container">
