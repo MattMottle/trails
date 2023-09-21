@@ -62,21 +62,31 @@ public class ReviewController {
 	}
 	
 	@GetMapping("/reviews/{id}/edit_review")
-	public String editReview(@PathVariable Long id) {
+	public String editReview(@PathVariable Long id, Model model) {
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/";
 		}
 		Long userId = (Long) session.getAttribute("userId");
+		Review thisReview = reviewService.findById(id);
+		model.addAttribute("loggedUser", userService.findById(userId));
+		model.addAttribute("thisReview", thisReview);
 		return "editReview.jsp";
 	}
 	
 	@PutMapping("/reviews/{id}/editReview")
-	public String editReviewInDb() {
+	public String editReviewInDb(@PathVariable Long id, @Valid @ModelAttribute("thisReview") Review thisReview, BindingResult result, Model model) {
 		if(session.getAttribute("userId") == null) {
 			return "redirect:/";
 		}
 		Long userId = (Long) session.getAttribute("userId");
-		return null;
+		if (result.hasErrors()) {
+			model.addAttribute("loggedUser", userService.findById(userId));
+			model.addAttribute("thisReview", thisReview);
+			return "editReview.jsp";
+		}
+		reviewService.updateReview(thisReview);
+		return "redirect:/trails/" + thisReview.getReviewedTrail().getId();
+	
 	}
 	
 	@DeleteMapping("/reviews/{id}/deleteReview")
@@ -85,6 +95,7 @@ public class ReviewController {
 			return "redirect:/";
 		}
 		Long userId = (Long) session.getAttribute("userId");
-		return null;
+		reviewService.deleteReview(id);
+		return "redirect:/trails";
 	}
 }

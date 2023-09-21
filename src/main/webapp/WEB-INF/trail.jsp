@@ -13,6 +13,7 @@
 		<div class="banner">
 			<h1>${trail.name}</h1>
 			<a href="http://localhost:8080/trails">Back to the trails</a>
+			<a href="http://localhost:8080/trails/${trail.id}/new_review">Add a Review</a>
 		</div>
 		<div class="details">
 			<c:choose>
@@ -26,6 +27,7 @@
 				</c:otherwise>
 			</c:choose>
 			<p>${trail.description}</p>
+			<p>Average Rating: <c:out value="${averageRating}"/></p>
 		</div>
 		<c:if test="${loggedUser.id == trail.trailCreator.id}">
 			<div class="actions">
@@ -39,6 +41,25 @@
 			    </form>
 			</div>
 		</c:if>
+		<h2>Reviews:</h2>
+		<c:forEach var="thisReview" items="${trail.allReviews}">
+			<p>Added By: <c:out value="${ thisReview.reviewer.userName}"/></p>
+			<p>Rating: <c:out value="${thisReview.rating}"/></p>
+			<p>Review: <c:out value="${thisReview.reviewText}"/></p>
+			
+			<c:if test="${loggedUser.id == thisReview.reviewer.id}">
+			<div class="actions">
+				<form action="/reviews/${thisReview.id}/edit_review" method="get">
+					<input type="hidden" value="Edit"/>
+					<button class="edit">Edit</button>
+				</form>
+				<form action="/reviews/${thisReview.id}/deleteReview" method="post">
+			      	<input type="hidden" name="_method" value="delete" />
+			      	<button class="delete">Delete</button>
+			    </form>
+			</div>
+		</c:if>
+		</c:forEach>
 	</div>
 </body>
 </html>

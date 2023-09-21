@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mattmottle.trails.models.Review;
 import com.mattmottle.trails.models.Trail;
 import com.mattmottle.trails.models.User;
 import com.mattmottle.trails.services.TrailService;
@@ -47,7 +48,20 @@ public class TrailController {
 		Long userId = (Long) session.getAttribute("userId");
 		viewModel.addAttribute("loggedUser", userService.findById(userId));
 		Trail trail = trailService.findById(trailId);
+		// average of review ratings
+		Integer ratingTotal = 0;
+		for(Review currentReview : trail.getAllReviews()) {
+			ratingTotal += currentReview.getRating();
+		}
+		Double averageRating;
+		if(ratingTotal == 0) {
+			averageRating = null;
+		} else {
+			averageRating = Double.valueOf(ratingTotal)/ trail.getAllReviews().size();
+		}
+		
 		model.addAttribute("trail", trail);
+		model.addAttribute("averageRating", averageRating);
 		return "trail.jsp";
 	}
 	@GetMapping("/trails/new")

@@ -8,4 +8,6 @@ import com.mattmottle.trails.models.Trail;
 
 public interface TrailRepository extends CrudRepository<Trail, Long> {
 	List <Trail> findAll();
+	
 }
+	
